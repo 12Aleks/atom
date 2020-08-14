@@ -24,6 +24,16 @@
                     ></v-text-field>
                 </v-form>
             </v-col>
+            <v-col cols="12" offset-sm="3" sm="6" offset-md="3" md="6" offset-lg="3" lg="6">
+                <v-spacer></v-spacer>
+                <v-btn
+                        :disabled='!valid'
+                        class='success'
+                        @click='createAd'>
+                    Create Ad
+
+                </v-btn>
+            </v-col>
         </v-row>
     </v-container>
 </template>
@@ -34,7 +44,24 @@
         data(){
             return{
                 text: '',
-                description: ''
+                description: '',
+                promo: false,
+                valid: false,
+                src: ''
+            }
+        },
+        methods: {
+            createAd(){
+                if(this.$refs.form.validate()){
+                    const ad = {
+                        title: this.title,
+                        description: this.description,
+                        promo: this.promo,
+                        src: this.src
+                    }
+
+                    this.$store.dispatch('createAd', ad )
+                }
             }
         }
     }

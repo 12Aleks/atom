@@ -9,7 +9,7 @@
                             show-arrows-on-hover
                     >
                         <v-carousel-item
-                                v-for="(ad, i) in ads"
+                                v-for="(ad, i) in promoAds"
                                 :key="i"
                                 :src="ad.src"
                                 reverse-transition="fade-transition"
@@ -73,29 +73,15 @@
         name: "Home",
         data(){
             return {
-                ads: [
-                    {
-                        title: 'First ad',
-                        description: 'description',
-                        promo: false,
-                        id: '123',
-                        src: 'https://cdn.vuetifyjs.com/images/carousel/sky.jpg',
-                    },
-                    {
-                        title: 'Second ad',
-                        description: 'description',
-                        promo: true,
-                        id: '123',
-                        src: 'https://cdn.vuetifyjs.com/images/carousel/bird.jpg',
-                    },
-                    {
-                        title: 'Third ad',
-                        description: 'description',
-                        promo: true,
-                        id: '123',
-                        src: 'https://cdn.vuetifyjs.com/images/carousel/planet.jpg',
-                    },
-                ],
+
+            }
+        },
+        computed:{
+            promoAds(){
+              return this.$store.getters.promoAds
+            },
+            ads (){
+              return  this.$store.getters.ads
             }
         }
     }
