@@ -58,7 +58,8 @@
                     <v-card-actions>
                         <v-spacer></v-spacer>
                         <v-btn @click="onSubmit"
-                               :disabled="!valid"
+                               :disabled="!valid  || loading"
+                               :loading="loading "
                                color="indigo"
                                dark
                         >Create account
@@ -93,6 +94,11 @@
                 ]
             }
         },
+        computed:{
+            loading(){
+                return this.$store.getters.loading;
+            }
+        },
         methods: {
             onSubmit() {
                 if (this.$refs.form.validate()) {
@@ -105,7 +111,9 @@
                         this.password = '';
                         this.$refs.form.reset()
                     }, 3000);
-                    console.log(user)
+                    this.$store.dispatch('registerUser', user)
+                        .then(() => this.$router.push('/'))
+                        .catch(error => console.log(error))
                 }
             }
         }

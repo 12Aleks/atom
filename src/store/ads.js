@@ -48,9 +48,8 @@ export default {
         }
     },
     actions:{
-
         createAd({commit}, payload){
-            payload.id = Math.random()
+            payload.id = "12asdad"
             commit('createAd', payload)
         }
     },

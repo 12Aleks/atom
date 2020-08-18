@@ -25,6 +25,13 @@
                 </v-form>
             </v-col>
             <v-col cols="12" offset-sm="3" sm="6" offset-md="3" md="6" offset-lg="3" lg="6">
+                <v-switch label="Add to promo?"
+                          v-model="promo"
+                          color="indigo"
+                >
+
+
+                </v-switch>
                 <v-spacer></v-spacer>
                 <v-btn
                         :disabled='!valid'
@@ -47,7 +54,7 @@
                 description: '',
                 promo: false,
                 valid: false,
-                src: ''
+                src: 'https://www.termamed.pl/sites/termamed.pl/files/_banners/urzadzenia_rehabilitacyjne_20200626_pl_easyver.png'
             }
         },
         methods: {
