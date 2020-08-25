@@ -10,7 +10,7 @@
                             label="Ad title"
                             name="title"
                             type="text"
-                            v-model="text"
+                            v-model="title"
                             required
                             :rules="[v => !!v  || 'Title is required']"
                     ></v-text-field>
@@ -29,12 +29,10 @@
                           v-model="promo"
                           color="indigo"
                 >
-
-
                 </v-switch>
                 <v-spacer></v-spacer>
-                <v-btn
-                        :disabled='!valid'
+                <v-btn  :laoding = 'laoding'
+                        :disabled='!valid || laoding'
                         class='success'
                         @click='createAd'>
                     Create Ad
@@ -50,12 +48,18 @@
         name: "NewAd",
         data(){
             return{
-                text: '',
+                title: '',
                 description: '',
                 promo: false,
+                ownerId: ' ',
                 valid: false,
-                src: 'https://www.termamed.pl/sites/termamed.pl/files/_banners/urzadzenia_rehabilitacyjne_20200626_pl_easyver.png'
+                src: 'https://miro.medium.com/max/3920/1*oZqGznbYXJfBlvGp5gQlYQ.jpeg'
             }
+        },
+        computed:{
+           laoding(){
+              return  this.$store.getters.laoding
+           }
         },
         methods: {
             createAd(){
@@ -63,11 +67,16 @@
                     const ad = {
                         title: this.title,
                         description: this.description,
+                        ownerId: this.ownerId,
                         promo: this.promo,
                         src: this.src
                     }
 
                     this.$store.dispatch('createAd', ad )
+                    .then(() => {
+                        this.$router.push('/list')
+                    }).catch(() => {})
+
                 }
             }
         }

@@ -3,7 +3,7 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import vuetify from './plugins/vuetify';
-import * as firebase from 'firebase'
+import * as fb from 'firebase'
 
 Vue.config.productionTip = false
 
@@ -15,7 +15,7 @@ new Vue({
   vuetify,
   render: h => h(App),
   created(){
-   firebase.initializeApp({
+   fb.initializeApp({
      apiKey: "AIzaSyC6PCzGTtov37XPaCZyLlZqKqnJmBgITQg",
      authDomain: "atom-73b6f.firebaseapp.com",
      databaseURL: "https://atom-73b6f.firebaseio.com",
@@ -24,7 +24,14 @@ new Vue({
      messagingSenderId: "967792798987",
      appId: "1:967792798987:web:3ace7ca06404fd3c04460e",
      measurementId: "G-JY7Y1B8Z02"
-   });
-   firebase.analytics();
+   })
+
+    fb.auth().onAuthStateChanged(user => {
+      if(user) {
+        this.$store.dispatch('autoLoginUser', user)
+      }
+    })
+      this.$store.dispatch('fatchAds')
+   fb.analytics();
   }
 }).$mount('#app')

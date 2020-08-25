@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div v-if="!loading">
         <v-container fluid class="grey lighten-5 pt-0">
             <v-row>
                 <v-col cols="12 pr-0 pl-0 pt-0">
@@ -15,9 +15,12 @@
                                 reverse-transition="fade-transition"
                                 transition="fade-transition"
                         >
-                            <div class="car-link"><v-btn color='error'
-                                                         :to="'/ad/' + ad.id"
-                            >{{ad.title}}</v-btn></div>
+                            <div class="car-link">
+                                <v-btn color='error'
+                                       :to="'/ad/' + ad.id"
+                                >{{ad.title}}
+                                </v-btn>
+                            </div>
                         </v-carousel-item>
                     </v-carousel>
                 </v-col>
@@ -51,17 +54,32 @@
                         <v-card-actions>
                             <v-spacer></v-spacer>
                             <v-btn
-                            :to="/ad/ + ad.id">
+                                    :to="/ad/ + ad.id">
                                 Open
                             </v-btn>
 
                             <v-btn
-                                color="indigo"
-                                >
+                                    color="indigo"
+                            >
                                 Buy
                             </v-btn>
                         </v-card-actions>
                     </v-card>
+                </v-col>
+            </v-row>
+        </v-container>
+    </div>
+    <div v-else>
+        <v-container>
+            <v-row>
+                <v-col cols="12">
+                    <v-progress-circular
+                            :size="70"
+                            :width="7"
+                            color="purple"
+                            indeterminate
+                            class="d-block mx-auto pt-5"
+                    ></v-progress-circular>
                 </v-col>
             </v-row>
         </v-container>
@@ -71,30 +89,31 @@
 <script>
     export default {
         name: "Home",
-        data(){
-            return {
-
-            }
+        data() {
+            return {}
         },
-        computed:{
-            promoAds(){
-              return this.$store.getters.promoAds
+        computed: {
+            loading() {
+                return this.$store.getters.loading
             },
-            ads (){
-              return  this.$store.getters.ads
+            promoAds() {
+                return this.$store.getters.promoAds
+            },
+            ads() {
+                return this.$store.getters.ads
             }
         }
     }
 </script>
 
 <style scoped lang="stylus">
-  .car-link
-    position absolute
-    background rgba(0,0,0,.5)
-    bottom 50px
-    left 50%
-    transform translate(-50%, 0)
-    padding 5px 15px
-    border-top-left-radius 5px
-    border-top-right-radius 5px
+    .car-link
+        position absolute
+        background rgba(0, 0, 0, .5)
+        bottom 50px
+        left 50%
+        transform translate(-50%, 0)
+        padding 5px 15px
+        border-top-left-radius 5px
+        border-top-right-radius 5px
 </style>

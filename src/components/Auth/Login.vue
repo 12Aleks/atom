@@ -95,12 +95,17 @@
                   setTimeout(()=>{
                       this.email = '';
                       this.password = '';
-                      this.$refs.form.reset()
+                    //   this.$refs.form.reset()
                   }, 3000);
                   this.$store.dispatch('loginUser', user)
                       .then(() => this.$router.push('/'))
-                      .catch(error => console.log(error))
+                      .catch(() =>{})
               }
+            }
+        },
+        created() {
+            if(this.$route.query['loginError']){
+                this.$store.dispatch('setError', 'Please log in to access this page!')
             }
         }
 
