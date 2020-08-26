@@ -1,7 +1,7 @@
 import * as fb from 'firebase' // подключение библиотеки API firebase
 
 class Ad {
-    constructor (title, description, ownerId = '', src = 'https://miro.medium.com/max/3920/1*oZqGznbYXJfBlvGp5gQlYQ.jpeg', promo = false, id = null) {
+    constructor (title, description, ownerId, src = '', promo = false, id = null) {
         this.title = title
         this.description = description
         this.ownerId = ownerId
@@ -24,23 +24,36 @@ export default {
         }
     },
     actions: {
-        async createAd({commit, getters}, payload) {
+        async createAd({commit}, payload) {
             commit('clearError')
             commit('setLoading', true)
+
+            const image = payload.image
             try {
-                const newAd = new Ad(
+                const newAd = await new Ad(
                     payload.title,
                     payload.description,
-                    getters.user.id,
-                    payload.src,
+                    fb.auth().currentUser.uid,
+                   '',
                     payload.promo
                 )
 
                 const ad = await fb.database().ref('ads').push(newAd)
+                const imageExt = image.name.slice(image.name.lastIndexOf('.'))
+
+                const fileData = await fb.storage().ref(`ads/${ad.key}.${imageExt}`).put(image);
+                const src = await fileData.metadata.fullPath
+              
+
+                await fb.database().ref('ads').child(ad.key).update({
+                    src
+                })
+
                 commit('setLoading', false)
                 commit('createAd', {
                     ...newAd,
-                    id: ad.key
+                    id: ad.key,
+                    src: src
                 })
 
             } catch (error) {

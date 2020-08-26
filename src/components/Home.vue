@@ -60,6 +60,7 @@
 
                             <v-btn
                                     color="indigo"
+                                    dark
                             >
                                 Buy
                             </v-btn>
