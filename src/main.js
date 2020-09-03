@@ -2,11 +2,13 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
+import BuyModalComponent from  '@/components/Shared/BuyModal'
 import vuetify from './plugins/vuetify';
 import * as fb from 'firebase'
 
-Vue.config.productionTip = false
 
+Vue.config.productionTip = false
+Vue.component('app-buy-modal', BuyModalComponent)
 
 
 new Vue({

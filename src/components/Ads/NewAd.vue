@@ -20,6 +20,7 @@
                             name="description"
                             type="text"
                             v-model="description"
+                            multi-line
                             :rules="[v => !!v  || 'Description is required']"
                     ></v-text-field>
                 </v-form>
@@ -43,7 +44,7 @@
                 >
                 <v-row>
                     <v-col cols="12">
-                        <img :src="src" alt="" height="100" v-if="src">
+                        <img :src="imageSrc" alt="" height="100" v-if="imageSrc">
                     </v-col>
                 </v-row>
                 <v-switch label="Add to promo?"
@@ -74,7 +75,7 @@
                 promo: false,
                 valid: false,
                 image: null,
-                src: ''
+                imageSrc: ''
             }
         },
         computed:{
@@ -107,7 +108,7 @@
 
                 const reader = new FileReader()
                 reader.onload = () =>{
-                     this.src = reader.result
+                     this.imageSrc = reader.result
                 }
                 reader.readAsDataURL(file)
                 this.image = file

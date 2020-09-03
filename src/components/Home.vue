@@ -11,7 +11,7 @@
                         <v-carousel-item
                                 v-for="(ad, i) in promoAds"
                                 :key="i"
-                                :src="ad.src"
+                                :src="ad.imageSrc"
                                 reverse-transition="fade-transition"
                                 transition="fade-transition"
                         >
@@ -43,7 +43,7 @@
                         <v-img
                                 class="white--text align-end"
                                 height="200px"
-                                :src="ad.src"
+                                :src="ad.imageSrc"
                         >
                             <v-card-title>{{ad.title}}</v-card-title>
                         </v-img>
@@ -53,17 +53,11 @@
 
                         <v-card-actions>
                             <v-spacer></v-spacer>
-                            <v-btn
+                            <v-btn  class="mr-3"
                                     :to="/ad/ + ad.id">
                                 Open
                             </v-btn>
-
-                            <v-btn
-                                    color="indigo"
-                                    dark
-                            >
-                                Buy
-                            </v-btn>
+                            <app-buy-modal :ad="ad"></app-buy-modal>
                         </v-card-actions>
                     </v-card>
                 </v-col>
